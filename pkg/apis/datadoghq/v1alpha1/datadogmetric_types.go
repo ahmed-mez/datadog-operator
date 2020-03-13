@@ -7,24 +7,13 @@ package v1alpha1
 
 import (
 	corev1 "k8s.io/api/core/v1"
-	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // DatadogMetricSpec defines the desired state of DatadogMetric
 type DatadogMetricSpec struct {
-	// Name use to provide a Name to the metrics, if not provided, the "DatadogMetric.name"."DatadogMetric.name"
-	// will be used.
-	// +optional
-	Name string `json:"name,omitempty"`
-	// Query the raw datadog query
+	// Query is the raw datadog query
 	Query string `json:"query,omitempty"`
-	// ObjectReference
-	ObjectReference *v1.ObjectReference `json:"objectReference,omitempty"`
 }
 
 // DatadogMetricStatus defines the observed state of DatadogMetric
@@ -32,8 +21,8 @@ type DatadogMetricStatus struct {
 	// Conditions Represents the latest available observations of a DatadogMetric's current state.
 	// +listType=set
 	Conditions []DatadogMetricCondition `json:"conditions,omitempty"`
-	// CurrentValue is the current value of the metric (as a quantity)
-	CurrentValue resource.Quantity `json:"currentValue"`
+	// Value is the latest value of the metric
+	Value float64 `json:"currentValue"`
 }
 
 // DatadogMetricCondition describes the state of a DatadogMetric at a certain point.
@@ -61,8 +50,6 @@ type DatadogMetricCondition struct {
 type DatadogMetricConditionType string
 
 const (
-	// DatadogMetricConditionTypeActive DatadogMetric is active
-	DatadogMetricConditionTypeActive DatadogMetricConditionType = "Active"
 	// DatadogMetricConditionTypeUpdated DatadogMetric is updated
 	DatadogMetricConditionTypeUpdated DatadogMetricConditionType = "Updated"
 	// DatadogMetricConditionTypeValid DatadogMetric.spec.query is invalid
